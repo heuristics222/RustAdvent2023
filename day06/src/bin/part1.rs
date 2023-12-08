@@ -13,13 +13,11 @@ fn main() {
 
 fn part1(input: &str) -> u64 {
     let bestTimes = parseInput(input);
-    println!("{:#?}", bestTimes);
     let mut total = 1;
 
     for bestTime in bestTimes {
         let mut winningTimes = 0;
         for chargeTime in 1..bestTime.time {
-            println!("{chargeTime}, {}", chargeTime * (bestTime.time - chargeTime));
             if chargeTime * (bestTime.time - chargeTime) > bestTime.distance {
                 winningTimes += 1;
             }
