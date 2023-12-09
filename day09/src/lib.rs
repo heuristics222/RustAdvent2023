@@ -1,3 +1,4 @@
+#![feature(test)]
 use common::Part;
 mod part1;
 mod part2;

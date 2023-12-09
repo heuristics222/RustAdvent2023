@@ -1,11 +1,12 @@
 [package]
-name = "day04"
+name = "{{project-name}}"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 clap = {workspace = true}
 common = {path = "../common"}
+itertools = {workspace = true}
 nom = {workspace = true}
 num = {workspace = true}
 
