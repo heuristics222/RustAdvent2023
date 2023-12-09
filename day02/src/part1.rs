@@ -4,7 +4,7 @@ struct Game {
     reveals: Vec<(i32, i32, i32)>,
 }
 
-fn main() {
+pub(crate) fn main() {
     let input = include_str!("./input.txt");
     let output = part1(input);
     dbg!(output);

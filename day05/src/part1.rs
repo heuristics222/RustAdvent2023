@@ -17,7 +17,7 @@ struct Maps {
     htl: Vec<Mapping>,
 }
 
-fn main() {
+pub(crate) fn main() {
     let input = include_str!("./input.txt");
     let output = part1(input);
     dbg!(output);
@@ -36,8 +36,6 @@ fn part1(input: &str) -> u64 {
         seed = followMapping(seed, &maps.ltt);
         seed = followMapping(seed, &maps.tth);
         seed = followMapping(seed, &maps.htl);
-
-        println!("{seed}");
 
         locations.insert(locations.len(), seed);
     }

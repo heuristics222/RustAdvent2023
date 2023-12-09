@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
-
-fn main() {
+pub fn main() {
     let input = include_str!("./input.txt");
     let output = part1(input);
     dbg!(output);
@@ -11,21 +10,19 @@ fn part1(input: &str) -> usize {
     let inputs = parseInput(input);
     // println!("{:#?}", inputs);
 
-    inputs.1.keys().filter(|x| x.ends_with('A')).map(|x| *x).map(|x| {
-        let mut moves = 0;
-        let mut cur = x;
+    let mut x = 0;
+    let mut cur = "AAA";
 
-        while !cur.ends_with('Z') {
-            if inputs.0[moves % inputs.0.len()] == 'L' {
-                cur = inputs.1.get(cur).unwrap().0
-            } else {
-                cur = inputs.1.get(cur).unwrap().1
-            }
-            moves += 1;
+    while cur != "ZZZ" {
+        if inputs.0[x % inputs.0.len()] == 'L' {
+            cur = inputs.1.get(cur).unwrap().0
+        } else {
+            cur = inputs.1.get(cur).unwrap().1
         }
+        x += 1;
+    }
 
-        moves
-    }).reduce(|x,y| num::integer::lcm(x, y)).unwrap()
+    x
 }
 
 fn parseInput(input: &str) -> (Vec<char>, HashMap<&str, (&str, &str)>, &str) {

@@ -2,11 +2,11 @@ use std::cmp::max;
 
 #[derive(Debug)]
 struct Game {
-    number: i32,
+    _number: i32,
     reveals: Vec<(i32, i32, i32)>,
 }
 
-fn main() {
+pub(crate) fn main() {
     let input = include_str!("./input.txt");
     let output = part1(input);
     dbg!(output);
@@ -24,8 +24,6 @@ fn part1(input: &str) -> i32 {
             minCubes.2 = max(minCubes.2, reveal.2);
         }
         sum += minCubes.0 * minCubes.1 * minCubes.2;
-
-        println!("{}, {}, {}", minCubes.0, minCubes.1, minCubes.2);
     }
 
     sum
@@ -41,7 +39,7 @@ fn parseGame(line: &str) -> Game {
     let reveals: Vec<&str> = s.get(1).unwrap().split(";").collect();
     let reveals: Vec<(i32, i32, i32)> = reveals.iter().map(|x| toRGBTuple(x)).collect();
 
-    Game {number: gameStringSplit.get(1).unwrap().parse().unwrap(), reveals}
+    Game {_number: gameStringSplit.get(1).unwrap().parse().unwrap(), reveals}
 }
 
 fn toRGBTuple(input: &str) -> (i32, i32, i32) {

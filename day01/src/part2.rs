@@ -13,7 +13,7 @@ static NUMS: &'static [(&str, &str)] = &[
     ("nine", "9"),
 ];
 
-fn main() {
+pub(crate) fn main() {
     let input = include_str!("./input.txt");
     let output = part2(input);
     dbg!(output);
@@ -23,7 +23,6 @@ fn part2(input: &str) -> u32 {
     let mut sum = 0;
     for line in input.split("\n") {
         let newLine = adjustLine(line);
-        println!("{line} => {newLine}");
         let first = firstDigit(&mut newLine.chars().into_iter());
         let last = firstDigit(&mut newLine.chars().rev().into_iter());
 

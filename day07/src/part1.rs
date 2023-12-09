@@ -49,7 +49,7 @@ impl PartialOrd for Input {
     }
 }
 
-fn main() {
+pub fn main() {
     let input = include_str!("./input.txt");
     let output = part1(input);
     dbg!(output);
@@ -81,7 +81,7 @@ fn getHandType(hand: &Vec<char>) -> HandType {
         map.insert(*x, map.get(&x).unwrap_or(&0) + 1);
     }
 
-    let handType = if map.len() == 5 {
+    if map.len() == 5 {
         HandType::High
     } else if map.len() == 4 {
         HandType::One
@@ -99,47 +99,8 @@ fn getHandType(hand: &Vec<char>) -> HandType {
         }
     } else {
         HandType::Five
-    };
-
-    match map.get(&'J').unwrap_or(&0) {
-        1 => match handType {
-            HandType::High => HandType::One,
-            HandType::One => HandType::Three,
-            HandType::Two => HandType::Full,
-            HandType::Three => HandType::Four,
-            HandType::Full => panic!(),
-            HandType::Four => HandType::Five,
-            HandType::Five => panic!(),
-        },
-        2 => match handType {
-            HandType::High => panic!(),
-            HandType::One => HandType::Three,
-            HandType::Two => HandType::Four,
-            HandType::Three => panic!(),
-            HandType::Full => HandType::Five,
-            HandType::Four => panic!(),
-            HandType::Five => panic!(),
-        },
-        3 => match handType {
-            HandType::High => panic!(),
-            HandType::One => panic!(),
-            HandType::Two => panic!(),
-            HandType::Three => HandType::Four,
-            HandType::Full => HandType::Five,
-            HandType::Four => panic!(),
-            HandType::Five => panic!(),
-        },
-        4 => match handType {
-            HandType::High => panic!(),
-            HandType::One => panic!(),
-            HandType::Two => panic!(),
-            HandType::Three => panic!(),
-            HandType::Full => panic!(),
-            HandType::Four => HandType::Five,
-            HandType::Five => panic!(),
-        },
-        _ => handType,
     }
+
 }
 
 fn getCharValue(ch: char) -> u64 {
@@ -147,7 +108,7 @@ fn getCharValue(ch: char) -> u64 {
         'A' => 14,
         'K' => 13,
         'Q' => 12,
-        'J' => 1,
+        'J' => 11,
         'T' => 10,
         '9' => 9,
         '8' => 8,
