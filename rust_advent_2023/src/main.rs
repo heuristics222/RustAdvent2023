@@ -5,6 +5,8 @@ use common::Part;
 struct Args {
     day: Day,
     part: Part,
+    #[clap(short)]
+    alt: bool,
 }
 
 #[derive(Debug, Clone, ValueEnum)]
@@ -34,6 +36,6 @@ fn main() {
         Day::Day07 => day07::execute(args.part),
         Day::Day08 => day08::execute(args.part),
         Day::Day09 => day09::execute(args.part),
-        Day::Day10 => day10::execute(args.part),
+        Day::Day10 => day10::execute(args.part, args.alt),
     }
 }
