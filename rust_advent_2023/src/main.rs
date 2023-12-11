@@ -21,6 +21,7 @@ enum Day {
     Day08,
     Day09,
     Day10,
+    Day11,
 }
 
 fn main() {
@@ -37,5 +38,6 @@ fn main() {
         Day::Day08 => day08::execute(args.part),
         Day::Day09 => day09::execute(args.part),
         Day::Day10 => day10::execute(args.part, args.alt),
+        Day::Day11 => day11::execute(args.part),
     }
 }

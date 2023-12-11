@@ -1,6 +1,6 @@
 use itertools::Itertools;
 use nom::{multi::separated_list1, character::complete::char, IResult};
-extern crate test;
+// extern crate test;
 
 pub fn main() {
     let input = include_str!("./input.txt");
@@ -36,7 +36,7 @@ fn parseInput(input: &str) -> IResult<&str, Vec<Vec<i32>>> {
 
 #[cfg(test)]
 mod tests {
-    use test::Bencher;
+    // use test::Bencher;
 
     use super::*;
 
@@ -50,11 +50,11 @@ mod tests {
         assert_eq!(result, 2);
     }
 
-    #[bench]
-    fn bench(b: &mut Bencher) {
-        let input = include_str!("./input.txt");
-        b.iter(|| {
-            part1(input);
-        })
-    }
+    // #[bench]
+    // fn bench(b: &mut Bencher) {
+    //     let input = include_str!("./input.txt");
+    //     b.iter(|| {
+    //         part1(input);
+    //     })
+    // }
 }
