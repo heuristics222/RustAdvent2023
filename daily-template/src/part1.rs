@@ -1,12 +1,12 @@
 use nom::{multi::separated_list1, character::complete::alphanumeric1, IResult, bytes::complete::tag};
 
-pub fn execute(input: &str) -> &str {
+pub fn execute(input: &str) -> String {
     let inputs = parseInput(input.trim()).unwrap();
     assert_eq!(inputs.0, "");
     let inputs = inputs.1;
     println!("{:#?}", inputs);
 
-    inputs[0]
+    inputs[0].to_string()
 }
 
 fn parseInput(input: &str) -> IResult<&str, Vec<&str>> {
