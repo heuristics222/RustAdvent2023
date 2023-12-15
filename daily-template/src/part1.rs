@@ -4,7 +4,7 @@ pub fn execute(input: &str) -> String {
     let inputs = parseInput(input.trim()).unwrap();
     assert_eq!(inputs.0, "");
     let inputs = inputs.1;
-    println!("{:#?}", inputs);
+    // println!("{:#?}", inputs);
 
     inputs[0].to_string()
 }

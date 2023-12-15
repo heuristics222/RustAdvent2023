@@ -1,10 +1,10 @@
 use itertools::Itertools;
 use nom::{multi::separated_list1, character::complete::char, IResult};
 
-pub fn main() {
+pub fn main() -> String {
     let input = include_str!("./input.txt");
     let output = part1(input);
-    dbg!(output);
+    output.to_string()
 }
 
 fn part1(input: &str) -> i32 {

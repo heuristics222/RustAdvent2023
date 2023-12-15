@@ -13,10 +13,10 @@ static NUMS: &'static [(&str, &str)] = &[
     ("nine", "9"),
 ];
 
-pub(crate) fn main() {
+pub fn main() -> String {
     let input = include_str!("./input.txt");
     let output = part2(input);
-    dbg!(output);
+    output.to_string()
 }
 
 fn part2(input: &str) -> u32 {

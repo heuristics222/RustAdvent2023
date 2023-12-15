@@ -5,8 +5,12 @@ fn main() {
     divan::main();
 }
 
-// Define a `fibonacci` function and register it for benchmarking.
 #[divan::bench]
 fn part1() {
     day13::execute(Part::Part1);
+}
+
+#[divan::bench]
+fn part2() {
+    day13::execute(Part::Part2);
 }

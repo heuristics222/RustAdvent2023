@@ -1,9 +1,9 @@
 use std::collections::HashMap;
 
-pub fn main() {
+pub fn main() -> String {
     let input = include_str!("./input.txt");
     let output = part1(input);
-    dbg!(output);
+    output.to_string()
 }
 
 fn part1(input: &str) -> usize {

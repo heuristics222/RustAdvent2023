@@ -25,12 +25,13 @@ enum Day {
     Day12,
     Day13,
     Day14,
+    Day15,
 }
 
 fn main() {
     let args = Args::parse();
 
-    match args.day {
+    let solution = match args.day {
         Day::Day01 => day01::execute(args.part),
         Day::Day02 => day02::execute(args.part),
         Day::Day03 => day03::execute(args.part),
@@ -45,5 +46,8 @@ fn main() {
         Day::Day12 => day12::execute(args.part),
         Day::Day13 => day13::execute(args.part),
         Day::Day14 => day14::execute(args.part),
-    }
+        Day::Day15 => day15::execute(args.part),
+    };
+
+    println!("{solution}");
 }

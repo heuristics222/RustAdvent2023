@@ -4,11 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-clap = {workspace = true}
-common = {path = "../common"}
-itertools = {workspace = true}
-nom = {workspace = true}
-num = {workspace = true}
+clap.workspace = true
+common.path = "../common"
+itertools.workspace = true
+nom.workspace = true
+num.workspace = true
 
 [lints]
 workspace = true
