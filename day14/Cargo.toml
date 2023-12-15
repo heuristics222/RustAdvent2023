@@ -1,5 +1,5 @@
 [package]
-name = "day13"
+name = "day14"
 version = "0.1.0"
 edition = "2021"
 
@@ -9,10 +9,6 @@ common = {path = "../common"}
 itertools = {workspace = true}
 nom = {workspace = true}
 num = {workspace = true}
-divan = {workspace = true}
 
 [lints]
 workspace = true
-
-[dev.dependencies]
-divan = {workspace = true}
