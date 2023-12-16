@@ -10,6 +10,7 @@ divan.workspace = true
 itertools.workspace = true
 nom.workspace = true
 num.workspace = true
+rayon.workspace = true
 
 [lints]
 workspace = true

@@ -1,5 +1,3 @@
-use common::Part;
-
 fn main() {
     // Run registered benchmarks.
     divan::main();
@@ -7,10 +5,10 @@ fn main() {
 
 #[divan::bench]
 fn part1() {
-    {{project-name}}::execute(Part::Part1);
+    {{project-name}}::part1::execute(include_str!("../src/input.txt"));
 }
 
 #[divan::bench]
 fn part2() {
-    {{project-name}}::execute(Part::Part2);
+    {{project-name}}::part2::execute(include_str!("../src/input.txt"));
 }

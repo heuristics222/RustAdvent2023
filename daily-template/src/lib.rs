@@ -1,6 +1,6 @@
 use common::Part;
-mod part1;
-mod part2;
+pub mod part1;
+pub mod part2;
 
 pub fn execute(part: Part) -> String {
     let input = include_str!("./input.txt");

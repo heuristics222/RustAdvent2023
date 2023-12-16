@@ -48,7 +48,7 @@ fn main() {
         Day::Day13 => day13::execute(args.part),
         Day::Day14 => day14::execute(args.part),
         Day::Day15 => day15::execute(args.part),
-        Day::Day16 => day16::execute(args.part),
+        Day::Day16 => day16::execute(args.part, args.alt),
     };
 
     println!("{solution}");
