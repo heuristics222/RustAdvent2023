@@ -1,0 +1,20 @@
+[package]
+name = "day16"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap.workspace = true
+common.path = "../common"
+divan.workspace = true
+itertools.workspace = true
+nom.workspace = true
+num.workspace = true
+
+[lints]
+workspace = true
+
+[[bench]]
+name = "day16"
+path = "benches/benchmarks.rs"
+harness = false

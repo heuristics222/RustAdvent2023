@@ -18,6 +18,23 @@ fn parseInput(input: &str) -> Vec<&str> {
     input.split(',').collect()
 }
 
+pub fn execute_fast(input: &str) -> String {
+    let mut hash_sum = 0u32;
+    let mut cur_hash = 0u8;
+
+    input.trim().bytes().for_each(|b| {
+        match b {
+            b',' => {
+                hash_sum += cur_hash as u32;
+                cur_hash = 0;
+            }
+            _ => cur_hash = cur_hash.wrapping_add(b).wrapping_mul(17),
+        }
+    });
+
+    hash_sum.to_string()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
