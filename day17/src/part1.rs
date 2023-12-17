@@ -1,46 +1,5 @@
 use std::collections::BinaryHeap;
 
-
-#[derive(Copy, Clone, Eq, PartialEq)]
-enum Direction {
-    Left,
-    Right,
-    Up,
-    Down,
-}
-
-impl Direction {
-    fn val(&self) -> usize {
-        match self {
-            Direction::Left => 0,
-            Direction::Right => 1,
-            Direction::Up => 2,
-            Direction::Down => 3,
-        }
-    }
-}
-
-#[derive(Copy, Clone, Eq, PartialEq)]
-struct State {
-    cost: usize,
-    x: usize,
-    y: usize,
-    consec: usize,
-    dir: Direction,
-}
-
-impl Ord for State {
-    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        other.cost.cmp(&self.cost)
-    }
-}
-
-impl PartialOrd for State {
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        Some(self.cmp(other))
-    }
-}
-
 pub fn execute(input: &str) -> String {
     let inputs = parseInput(input.trim());
     // println!("{:#?}", inputs);
@@ -48,75 +7,72 @@ pub fn execute(input: &str) -> String {
     traverse(&inputs).to_string()
 }
 
-fn push_into(dist: &mut Vec<Vec<Vec<Vec<usize>>>>, heap: &mut BinaryHeap<State>, state: &State) {
-    if state.cost < dist[state.y][state.x][state.dir.val()][state.consec] {
-        heap.push(*state);
-        dist[state.y][state.x][state.dir.val()][state.consec] = state.cost;
+fn push_into(grid: &Vec<Vec<usize>>, dist: &mut Vec<usize>, heap: &mut BinaryHeap<isize>, x:usize, y:usize, cost:usize, dir:usize) {
+    let state: usize = cost << 33 | dir << 32 | x << 16 | y;
+    let idx = y * grid[0].len() + x + dir * grid[0].len() * grid.len();
+    if cost < dist[idx] {
+        heap.push(-(state as isize));
+        dist[idx] = cost;
     }
 }
 
 fn traverse(grid: &Vec<Vec<usize>>) -> usize {
-
     let mut heap = BinaryHeap::new();
+    let mut dist = vec![usize::MAX; 2 * grid[0].len() * grid.len()];
 
-    let mut dist = vec![vec![vec![vec![usize::MAX; 4]; 4]; grid[0].len()]; grid.len()];
+    push_into(grid, &mut dist, &mut heap, 0, 0, 1, 0);
+    push_into(grid, &mut dist, &mut heap, 0, 0, 1, 1);
 
-    push_into(&mut dist, &mut heap, &State {x:0, y:0, cost:0, consec:0, dir:Direction::Down});
-
-    while let Some(State { cost, x, y, consec, dir}) = heap.pop() {
-        if x == grid.len() - 1 && y == grid.len() - 1 {
-            return cost;
+    while let Some(state) = heap.pop() {
+        let state:usize = (-state) as usize;
+        let cost = (state & 0xFFFFFFFE00000000) >> 33;
+        let dir = (state & 0x0000000100000000) >> 32;
+        let x = (state & 0x00000000FFFF0000) >> 16;
+        let y = state & 0x000000000000FFFF;
+        if x == grid[0].len() - 1 && y == grid.len() - 1 {
+            return cost - 1;
         }
 
-        if cost > dist[y][x][dir.val()][consec] {
+        if cost > dist[y * grid[0].len() + x + dir * grid[0].len() * grid.len()] {
             continue;
         }
 
         match dir {
-            Direction::Left => {
-                if y+1 < grid.len() {
-                    push_into(&mut dist, &mut heap, &State {x:x, y:y+1, cost:cost + grid[y+1][x], consec:1, dir:Direction::Down});
-                }
-                if y >= 1 {
-                    push_into(&mut dist, &mut heap, &State {x:x, y:y-1, cost:cost + grid[y-1][x], consec:1, dir:Direction::Up});
-                }
-                if consec < 3 && x >= 1 {
-                    push_into(&mut dist, &mut heap, &State {x:x-1, y:y, cost:cost + grid[y][x-1], consec:consec+1, dir:Direction::Left});
-                }
+            1 => {
+                let mut new_cost = cost;
+                (1..=3).for_each(|i| {
+                    if y+i < grid.len() {
+                        new_cost = new_cost + grid[y+i][x];
+                        push_into(grid, &mut dist, &mut heap, x, y+i, new_cost, 0);
+                    }
+
+                });
+                let mut new_cost = cost;
+                (1..=3).for_each(|i| {
+                    if y >= i {
+                        new_cost = new_cost + grid[y-i][x];
+                        push_into(grid, &mut dist, &mut heap, x, y-i, new_cost, 0);
+                    }
+                });
             },
-            Direction::Right => {
-                if y+1 < grid.len() {
-                    push_into(&mut dist, &mut heap, &State {x:x, y:y+1, cost:cost + grid[y+1][x], consec:1, dir:Direction::Down});
-                }
-                if y >= 1 {
-                    push_into(&mut dist, &mut heap, &State {x:x, y:y-1, cost:cost + grid[y-1][x], consec:1, dir:Direction::Up});
-                }
-                if consec < 3 && x+1 < grid[0].len() {
-                    push_into(&mut dist, &mut heap, &State {x:x+1, y:y, cost:cost + grid[y][x+1], consec:consec+1, dir:Direction::Right});
-                }
+            0 => {
+                let mut new_cost = cost;
+                (1..=3).for_each(|i| {
+                    if x+i < grid[0].len() {
+                        new_cost = new_cost + grid[y][x+i];
+                        push_into(grid, &mut dist, &mut heap, x+i, y, new_cost, 1);
+                    }
+
+                });
+                let mut new_cost = cost;
+                (1..=3).for_each(|i| {
+                    if x >= i {
+                        new_cost = new_cost + grid[y][x-i];
+                        push_into(grid, &mut dist, &mut heap, x-i, y, new_cost, 1);
+                    }
+                });
             },
-            Direction::Up => {
-                if x+1 < grid[0].len() {
-                    push_into(&mut dist, &mut heap, &State {x:x+1, y:y, cost:cost + grid[y][x+1], consec:1, dir:Direction::Right});
-                }
-                if x >= 1 {
-                    push_into(&mut dist, &mut heap, &State {x:x-1, y:y, cost:cost + grid[y][x-1], consec:1, dir:Direction::Left});
-                }
-                if consec < 3 && y >= 1 {
-                    push_into(&mut dist, &mut heap, &State {x:x, y:y-1, cost:cost + grid[y-1][x], consec:consec+1, dir:Direction::Up});
-                }
-            },
-            Direction::Down => {
-                if x+1 < grid[0].len() {
-                    push_into(&mut dist, &mut heap, &State {x:x+1, y:y, cost:cost + grid[y][x+1], consec:1, dir:Direction::Right});
-                }
-                if x >= 1 {
-                    push_into(&mut dist, &mut heap, &State {x:x-1, y:y, cost:cost + grid[y][x-1], consec:1, dir:Direction::Left});
-                }
-                if consec < 3 && y+1 < grid.len() {
-                    push_into(&mut dist, &mut heap, &State {x:x, y:y+1, cost:cost + grid[y+1][x], consec:consec+1, dir:Direction::Down});
-                }
-            },
+            _ => panic!(),
         }
     }
 
