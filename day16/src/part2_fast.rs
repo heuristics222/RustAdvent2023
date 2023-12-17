@@ -63,6 +63,10 @@ fn traverse(grid: &[u8], x:usize, y:usize, dir: FromDirection, energized: &mut V
                     }
                 },
                 b'-' => {
+                    if visited[idx] {
+                        return;
+                    }
+                    visited[idx] = true;
                     if x+1 < len {
                         traverse(grid, x+1, y, FromDirection::Left, energized, visited, len);
                     }
@@ -100,6 +104,10 @@ fn traverse(grid: &[u8], x:usize, y:usize, dir: FromDirection, energized: &mut V
                     }
                 },
                 b'-' => {
+                    if visited[idx] {
+                        return;
+                    }
+                    visited[idx] = true;
                     if x > 0 {
                         traverse(grid, x-1, y, FromDirection::Right, energized, visited, len);
                     }
@@ -125,6 +133,10 @@ fn traverse(grid: &[u8], x:usize, y:usize, dir: FromDirection, energized: &mut V
                     }
                 },
                 b'|' => {
+                    if visited[idx] {
+                        return;
+                    }
+                    visited[idx] = true;
                     if y+1 < len {
                         traverse(grid, x, y+1, FromDirection::Top, energized, visited, len);
                     }
@@ -162,6 +174,10 @@ fn traverse(grid: &[u8], x:usize, y:usize, dir: FromDirection, energized: &mut V
                     }
                 },
                 b'|' => {
+                    if visited[idx] {
+                        return;
+                    }
+                    visited[idx] = true;
                     if y > 0 {
                         traverse(grid, x, y-1, FromDirection::Bottom, energized, visited, len);
                     }
