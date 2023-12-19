@@ -1,3 +1,5 @@
+use itertools::Itertools;
+
 #[derive(PartialEq)]
 enum Direction {
     Right,
@@ -8,18 +10,43 @@ enum Direction {
 
 struct Instruction {
     dir: Direction,
-    amount: usize,
+    amount: isize,
 }
 
 pub fn execute(input: &str) -> String {
     let inputs = parseInput(input.trim());
     // println!("{:#?}", inputs);
 
-    let mut grid:Vec<Vec<usize>> = vec![vec![0; 10000]; 10000];
+    let hsegs:Vec<isize> = inputs.iter().filter(|x| x.dir == Direction::Right || x.dir == Direction::Left)
+        .scan(0 as isize, |acc, x| {
+            if x.dir == Direction::Right {
+                *acc += x.amount;
+            } else {
+                *acc -= x.amount;
+            }
+            Some(*acc)
+        })
+        .sorted()
+        .dedup()
+        .collect();
 
-    let mut curx = 5000;
-    let mut cury = 5000;
-    grid[curx][cury] = 2;
+    let vsegs:Vec<isize> = inputs.iter().filter(|x| x.dir == Direction::Up || x.dir == Direction::Down)
+        .scan(0, |acc, x| {
+            if x.dir == Direction::Down {
+                *acc += x.amount;
+            } else {
+                *acc -= x.amount;
+            }
+            Some(*acc)
+        })
+        .sorted()
+        .dedup()
+        .collect();
+
+    let mut grid:Vec<Vec<usize>> = vec![vec![0; (hsegs.last().unwrap() - hsegs.first().unwrap() + 1) as usize]; (vsegs.last().unwrap() - vsegs.first().unwrap() + 1) as usize];
+
+    let mut curx = (-hsegs.first().unwrap()) as usize;
+    let mut cury = (-vsegs.first().unwrap()) as usize;
     inputs.iter().enumerate().for_each(|(idx, i)| {
         (0..i.amount).for_each(|_| {
             match i.dir {
@@ -42,8 +69,6 @@ pub fn execute(input: &str) -> String {
             _ => panic!(),
         }
     });
-
-    // println!("{:#?}", grid);
 
     grid.iter().map(|row| {
         let mut inside = false;
@@ -83,7 +108,7 @@ fn parseInput(input: &str) -> Vec<Instruction> {
                 "D" => Direction::Down,
                 _ => panic!(),
             },
-            amount: split[1].parse::<usize>().unwrap()
+            amount: split[1].parse::<isize>().unwrap()
         }
     }).collect()
 }
