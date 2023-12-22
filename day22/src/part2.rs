@@ -41,9 +41,9 @@ pub fn execute(input: &str) -> String {
 
     (0..inputs.len()).map(|i| {
         let mut new_inputs = inputs.iter().filter(|b| b.index != i).map(|x| x.clone()).collect_vec();
-
+        print!("{:#?}", inputs[i]);
         settle_blocks(&mut new_inputs)
-    }).sum::<usize>().to_string()
+    }).inspect(|f| println!("{f}")).sum::<usize>().to_string()
 }
 
 fn settle_blocks(blocks: &mut Vec<Block>) -> usize {
