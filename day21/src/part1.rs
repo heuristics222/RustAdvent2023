@@ -10,7 +10,7 @@ pub fn execute(input: &str, start: (usize, usize), steps: usize) -> String {
 
     positions.insert(start);
 
-    for i in 0..steps {
+    for _ in 0..steps {
         let clone = positions.clone();
         let points = clone.iter().collect_vec();
         positions.clear();
@@ -29,8 +29,6 @@ pub fn execute(input: &str, start: (usize, usize), steps: usize) -> String {
                 positions.insert((point.0, point.1 + 1));
             }
         });
-
-        println!("{} {}", i, positions.len());
     }
 
     positions.len().to_string()
