@@ -64,14 +64,23 @@ fn settle_blocks(blocks: &mut Vec<Block>, supports: &mut Vec<HashSet<usize>>, su
 fn parseInput(input: &str) -> Vec<Block> {
     input.lines().map(|line| {
         let split = line.split_once("~").unwrap();
-        let coord1:Vec<usize> = split.0.split(",").map(|x| x.parse().unwrap()).collect();
-        let coord2:Vec<usize> = split.1.split(",").map(|x| x.parse().unwrap()).collect();
-        let min_x = coord1[0].min(coord2[0]);
-        let min_y = coord1[1].min(coord2[1]);
-        let min_z = coord1[2].min(coord2[2]);
-        let max_x = coord1[0].max(coord2[0]);
-        let max_y = coord1[1].max(coord2[1]);
-        let max_z = coord1[2].max(coord2[2]);
+
+        let split_x_yz1 = split.0.split_once(",").unwrap();
+        let split_y_z1 = split_x_yz1.1.split_once(",").unwrap();
+        let x1:usize = split_x_yz1.0.parse().unwrap();
+        let y1:usize = split_y_z1.0.parse().unwrap();
+        let z1:usize = split_y_z1.1.parse().unwrap();
+        let split_x_yz2 = split.1.split_once(",").unwrap();
+        let split_y_z2 = split_x_yz2.1.split_once(",").unwrap();
+        let x2:usize = split_x_yz2.0.parse().unwrap();
+        let y2:usize = split_y_z2.0.parse().unwrap();
+        let z2:usize = split_y_z2.1.parse().unwrap();
+        let min_x = x1.min(x2);
+        let min_y = y1.min(y2);
+        let min_z = z1.min(z2);
+        let max_x = x1.max(x2);
+        let max_y = y1.max(y2);
+        let max_z = z1.max(z2);
 
         Block{min_x, min_y, min_z, max_x, max_y, max_z}
     }).collect()
