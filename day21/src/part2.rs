@@ -64,7 +64,7 @@ pub fn execute(input: &str, start: (i64, i64), steps: i64) -> String {
 fn parseInput(input: &str) -> Vec<Vec<bool>> {
     input.lines().map(|line| {
         line.chars().map(|ch| {
-            ch == '.'
+            ch != '#'
         }).collect()
     }).collect()
 }
