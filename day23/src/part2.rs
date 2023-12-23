@@ -20,7 +20,7 @@ pub fn execute(input: &str) -> String {
     //         '>' => Space::Right,
     //     }
     // })
-    let start_x = inputs[0].iter().enumerate().find_or_first(|(i, x)| **x == '.').unwrap().0;
+    let start_x = inputs[0].iter().enumerate().find_or_first(|(_, x)| **x == '.').unwrap().0;
 
     let mut queue: VecDeque<(isize, isize, usize, HashSet<(isize, isize)>)> = Default::default();
 

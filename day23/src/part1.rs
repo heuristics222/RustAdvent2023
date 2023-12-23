@@ -14,13 +14,7 @@ pub fn execute(input: &str) -> String {
     let inputs = parseInput(input.trim());
     // println!("{:#?}", inputs);
 
-    // let valid:HashMap<(isize, isize), Space> = inputs.iter().enumerate().for_each(|(y, row)| row.iter().enumerate().for_each(|(x, ch| {
-    //     match ch {
-    //         '.' => Space::Valid,
-    //         '>' => Space::Right,
-    //     }
-    // })
-    let start_x = inputs[0].iter().enumerate().find_or_first(|(i, x)| **x == '.').unwrap().0;
+    let start_x = inputs[0].iter().enumerate().find_or_first(|(_, x)| **x == '.').unwrap().0;
 
     let mut queue: VecDeque<(isize, isize, usize, HashSet<(isize, isize)>)> = Default::default();
 

@@ -12,3 +12,8 @@ fn part1() {
 fn part2() {
     day23::part2::execute(include_str!("../src/input.txt"));
 }
+
+#[divan::bench]
+fn part2_fast() {
+    day23::part2_fast::execute(include_str!("../src/input.txt"));
+}
